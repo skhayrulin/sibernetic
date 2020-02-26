@@ -114,7 +114,7 @@ def old_gen(model, file_name="model.txt"):
     fp = open(file_name, 'w')
     fp.write("parameters[\n")
     for p in model["parameters"]:
-        fp.write(f'{p}: {model["parameters"][p]}\n')
+        fp.write(f'{p}:{model["parameters"][p]}\n')
     fp.write("]\n")
     fp.write("model[\n")
     fp.write("position[\n")

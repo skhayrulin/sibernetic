@@ -1,29 +1,29 @@
 parameters[
-particles: 30
-h: 3.34
-x_max: 80.16
-x_min: 0
-y_max: 40.08
-y_min: 0
-z_max: 40.08
-z_min: 0
-mass: 2e-12
-rho0: 1000.0
-time_step: 2e-05
-simulation_scale: 7.400000000000003e-06
-beta: 3.2000000000000004e-39
-wpoly6_coefficient: 4.551735613527801e+41
-grad_wspiky_coefficient: -6.283382842770474e+28
-divgrad_wviscosity_coefficient: 6.283382842770474e+28
-mass_mult_wpoly6_coefficient: 9.103471227055601e+29
-mass_mult_grad_wspiky_coefficient: -1.2566765685540947e+17
-mass_mult_divgrad_viscosity_coefficient: 1.2566765685540947e+17
-surf_tens_coeff: 6.736568708021148e+24
-delta: 0.17831174171222014
-gravity_x: 0.0
-gravity_y: -9.8
-gravity_z: 0.0
-mu: 4.000000000000001e-06
+particles:30
+h:3.34
+x_max:80.16
+x_min:0
+y_max:40.08
+y_min:0
+z_max:40.08
+z_min:0
+mass:2e-12
+rho0:1000.0
+time_step:2e-05
+simulation_scale:7.400000000000003e-06
+beta:3.2000000000000004e-39
+wpoly6_coefficient:4.551735613527801e+41
+grad_wspiky_coefficient:-6.283382842770474e+28
+divgrad_wviscosity_coefficient:6.283382842770474e+28
+mass_mult_wpoly6_coefficient:9.103471227055601e+29
+mass_mult_grad_wspiky_coefficient:-1.2566765685540947e+17
+mass_mult_divgrad_viscosity_coefficient:1.2566765685540947e+17
+surf_tens_coeff:6.736568708021148e+24
+delta:0.17831174171222014
+gravity_x:0.0
+gravity_y:-9.8
+gravity_z:0.0
+mu:4.000000000000001e-06
 ]
 model[
 position[

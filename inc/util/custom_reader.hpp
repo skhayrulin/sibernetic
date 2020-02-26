@@ -9,7 +9,7 @@
 #include "error.h"
 #include <fstream>
 #include <iostream>
-#include <regex>
+//#include <regex>
 
 template<class T>
 class custom_reader : public abstract_reader<T> {
@@ -54,23 +54,27 @@ public:
                     continue;
                 }
                 if (mode == PARAMS) {
-                    std::regex rgx("^\\s*(\\w+)\\s*:\\s*(-?\\d+(\\.?\\d*([eE]?[+-]?\\d+)?)?)"
-                                   "\\s*(//.*)?$");
-                    std::smatch matches;
-                    if (std::regex_search(cur_line, matches, rgx)) {
-                        if (matches.size() > 2) {
-                            model->get_config()[matches[1]] = static_cast<T>(stod(matches[2].str()));
-                            continue;
-                        } else {
-                            std::string msg = sibernetic::make_msg(
-                                    "Problem with parsing parameters:", matches[0].str(),
-                                    "Please check parameters.");
-                            throw sibernetic::parser_error(msg);
-                        }
-                    } else {
-                        throw sibernetic::parser_error(
-                                "Please check parameters section there are no parametrs.");
-                    }
+                    // std::regex rgx("^\\s*(\\w+)\\s*:\\s*(-?\\d+(\\.?\\d*([eE]?[+-]?\\d+)?)?)"
+                    //                "\\s*(//.*)?$");
+                    // std::smatch matches;
+                    // if (std::regex_search(cur_line, matches, rgx)) {
+                    //     if (matches.size() > 2) {
+                    //         model->get_config()[matches[1]] = static_cast<T>(stod(matches[2].str()));
+                    //         continue;
+                    //     } else {
+                    //         std::string msg = sibernetic::make_msg(
+                    //                 "Problem with parsing parameters:", matches[0].str(),
+                    //                 "Please check parameters.");
+                    //         throw sibernetic::parser_error(msg);
+                    //     }
+                    // } else {
+                    //     throw sibernetic::parser_error(
+                    //             "Please check parameters section there are no parametrs.");
+                    // }
+                    auto colom_po = cur_line.find(":");
+                    std::string param_name = cur_line.substr(0, colom_po);
+                    double param_value = static_cast<T>(stod(cur_line.substr(colom_po+1, cur_line.size())));
+                    model->get_config()[param_name] = param_value;
                 }
                 if (is_model_mode) {
                     switch (mode) {
