@@ -324,8 +324,8 @@ def main():
     #gen_model(1, 1, 1)
     #gen_model(8, 8, 8)
     #gen_model(128, 128, 128)
-    gen_model(192, 96, 96)
-    #gen_model(48, 24, 24)
+    #gen_model(192, 96, 96)
+    gen_model(24, 12, 12)
     #gen_model(96, 96, 96)
 
     #gen_model(192, 48, 48)

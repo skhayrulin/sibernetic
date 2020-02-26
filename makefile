@@ -13,12 +13,10 @@ BINARY_DIR = $(BUILD_DIR)/obj
 
 # OCL_INC  = -I/opt/AMDAPPSDK-3.0/include/
 OCL_INC  = -I/usr/local/cuda/include/
-OCL_LIB  = -L/usr/lib64/OpenCL/vendors/amd/
+OCL_LIB  = -L/usr/local/cuda/lib64/
 
-OCL_INC = -I/opt/intel/opencl/SDK/include
-OCL_LIB  = -lOpenCL
-
-LIBS := -lOpenCL -lGL -lGL -lglut
+#OCL_INC = -I/opt/intel/opencl/SDK/include
+LIBS := -lOpenCL
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Darwin)
 	LIBS := -framework OpenCL
@@ -59,21 +57,6 @@ $(BINARY_DIR)/%.o: $(SRC_DIR)/%.$(SRC_EXT)
 	@echo 'Invoking: GCC C++ Compiler'
 	$(CXXFLAGS) $(OCL_INC) -I$(INC_DIR) -c -o "$@" "$<"
 	@echo 'Finished building: $<'
-
-$(TEST_BIN_DIR)/%.o: $(TEST)/%.$(SRC_EXT)
-	@mkdir -p $(TEST_BIN_DIR)
-	@echo 'Building file: $<'
-	@echo 'Invoking: GCC C++ Compiler'
-	$(CXXFLAGS) -I$(INC_DIR) -c -o "$@" "$<"
-	@echo 'Finished building: $<'
-
-
-$(TEST_TARGET): $(OBJ) $(TEST_OBJ)
-	@echo ' $(SRC)'
-	@echo ' $(OBJ)'
-	@echo 'Building target: $@'
-	$(CXXFLAGS) $(OCL_LIB) -o $(TEST_BIN_DIR)/$(TEST_TARGET) $(TEST_OBJ) $(OBJ) $(LIBS) -lgtest
-	@echo 'Finished building target: $@'
 
 clean:
 	@echo "Cleaning...";

@@ -34,16 +34,12 @@
 #include "isolver.h"
 #include "util/arg_parser.h"
 #include "util/custom_reader.hpp"
-#include "graph.h"
 #include <iostream>
 #include <thread>
 
 using sibernetic::model::sph_model;
 using sibernetic::solver::solver_container;
 using sibernetic::solver::EXECUTION_MODE;
-using sibernetic::graphics::graph;
-using sibernetic::graphics::UI_MODE;
-using sibernetic::graphics::g_config;
 
 
 int main(int argc, char **argv) {
@@ -54,7 +50,6 @@ int main(int argc, char **argv) {
   }
   std::string model_name;
   auto mode = EXECUTION_MODE::ONE;
-  auto ui_mode = UI_MODE::CLI;
   bool parallel_sort = false;
   size_t dev_count = 0;
   if (prsr.check_arg("-f")) {
@@ -69,9 +64,6 @@ int main(int argc, char **argv) {
   	}
   	mode = EXECUTION_MODE::ALL;
   }
-  if (prsr.check_arg("--with_g")) {
-    ui_mode = UI_MODE::OGL;
-  }
   if (prsr.check_arg("--p_sort")) {
     parallel_sort = true;
   }
@@ -84,16 +76,6 @@ int main(int argc, char **argv) {
     }
 
     std::shared_ptr<sph_model<float>> model(new sph_model<float>(model_name, reader));
-    auto config = new g_config{
-      model->get_config()["x_min"],
-      model->get_config()["y_min"],
-      model->get_config()["z_min"],
-      model->get_config()["x_max"],
-      model->get_config()["y_max"],
-      model->get_config()["z_max"],
-    };
-    graph::config = config;
-    graph::model = model;
     solver_container<float> &s_con = solver_container<float>::instance(
             model,
             mode,
@@ -102,13 +84,7 @@ int main(int argc, char **argv) {
             parallel_sort
     );
     //model->sort();
-    if(ui_mode == UI_MODE::OGL) {
-      std::thread graph_thread(graph::run, argc, argv);
-      s_con.run();
-      graph_thread.join();
-    } else {
-      s_con.run();
-    }
+    s_con.run();
   } catch (sibernetic::parser_error &e) {
     std::cout << e.what() << std::endl;
     return EXIT_FAILURE;
