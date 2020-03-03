@@ -47,7 +47,21 @@ namespace sibernetic{
             }
 
             void to_string() {
-                std::cout << start << end << ghost_start << ghost_end << start_cell_id << end_cell_id << start_ghost_cell_id << end_ghost_cell_id << std::cout;
+                std::cout << "start - " << start 
+                << " end - " << end 
+                << " ghost_start - "  << ghost_start 
+                << " ghost_end - " << ghost_end 
+                << " start_cell_id - " << start_cell_id 
+                << " end_cell_id - " << end_cell_id 
+                << " start_ghost_cell_id - " <<  start_ghost_cell_id 
+                << " end_ghost_cell_id - " << end_ghost_cell_id 
+                << " size - " << size() 
+                << " total_size - " << total_size() 
+                << " cell_count - " << cell_count()
+                << " total_cell_count - " << total_cell_count()
+                << " offset - " << offset() 
+                << " limit - " << limit()
+                << std::endl;
             }
         };
     }

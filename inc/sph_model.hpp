@@ -281,6 +281,9 @@ namespace sibernetic {
                 next_partition = 0;
                 if (dev_count == 1) {
                     update_partition(0, size() - 1, 0);
+					for(auto p: this->partitions) {
+						p.to_string();
+					}
                     return;
                 }
                 auto part_size = static_cast<size_t>(size() / dev_count);
@@ -317,10 +320,6 @@ namespace sibernetic {
                         }
                     }
                 }
-
-				for(auto p: this->partitions) {
-					std::cout <<
-				}
             }
 
             void update_partition(size_t start, size_t end, size_t p_id) {
