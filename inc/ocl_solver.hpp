@@ -188,16 +188,15 @@ namespace sibernetic {
 				init_buffers();
 			}
 
-		void run() override {
+		void run(int iter_lim) override {
 			int i = 0;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 			while(true) {
-//				if(i == 690) {
-//					_debug_();
-//					break;
-//					std::cout << "??????????????" << std::endl;
-//				}
+				if(iter_lim != -1 && i == iter_lim) {
+					//_debug_();
+					break;
+				}
 				neighbour_search();
 				physic();
 				++i;
@@ -334,10 +333,11 @@ namespace sibernetic {
 			}
 
 			void copy_buffer_to_device(
-					const void *host_b,
-					cl::Buffer &ocl_b,
-			        const size_t offset,
-			        const size_t size) {
+				const void *host_b,
+				cl::Buffer &ocl_b,
+				const size_t offset,
+				const size_t size
+			) {
 				// Actually we should check  size and type
 				int err = queue.enqueueWriteBuffer(ocl_b, CL_TRUE, offset, size, host_b);
 				if (err != CL_SUCCESS) {
@@ -348,10 +348,15 @@ namespace sibernetic {
 				queue.finish();
 			}
 
-			void copy_buffer_from_device(void *host_b, const cl::Buffer &ocl_b,
-			                             const size_t size, size_t offset) {
+			void copy_buffer_from_device(
+				void *host_b, 
+				const cl::Buffer &ocl_b,
+			    const size_t size, 
+				size_t offset
+			) {
 				// Actualy we should check  size and type
 				int err = queue.enqueueReadBuffer(ocl_b, CL_TRUE, offset, size, host_b);
+				std::cout << "?????? SIZE " << size << " OFFSET " << offset << std::endl; 
 				if (err != CL_SUCCESS) {
 					std::string error_m =
 							make_msg("Copy buffer from device is failed error code is ", err);

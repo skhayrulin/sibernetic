@@ -88,7 +88,7 @@ def gen_param_map(out, h, x_dim, y_dim, z_dim, mass=MASS):
     out["parameters"]["gravity_z"] = 0.0
     out["parameters"]["mu"] = 0.1 * 0.00004
 
-def gen_model(x_dim, y_dim, z_dim, file_name="tmp"):
+def gen_model(x_dim, y_dim, z_dim, file_name="tmp", coeff=0.5):
     particle_count = 0
     h = 3.34
     r0 = h * 0.5
@@ -99,7 +99,7 @@ def gen_model(x_dim, y_dim, z_dim, file_name="tmp"):
 
     #draw_bounds(out, x_dim, y_dim, z_dim, h, r0)
     draw_bounds(out, x_dim, y_dim, z_dim, h, r0)
-    for x in gen(3 * r0, h * x_dim * 5/7 - 3 * r0, r0):
+    for x in gen(3 * r0, h * x_dim * coeff - 3 * r0, r0):
         for y in gen(3 * r0, h * y_dim - 3 * r0, r0):
             for z in gen(3 * r0, h * z_dim - 3 * r0, r0):
                 out["model"].append(make_particle(pos=[x, y, z, 1.0], type=ParticleType.LIQUID, mass=MASS))
@@ -110,7 +110,7 @@ def gen_model(x_dim, y_dim, z_dim, file_name="tmp"):
     # fp.close()
     old_gen(out)
 
-def old_gen(model, file_name="model.txt"):
+def old_gen(model, file_name="data/model.txt"):
     fp = open(file_name, 'w')
     fp.write("parameters[\n")
     for p in model["parameters"]:
@@ -121,12 +121,13 @@ def old_gen(model, file_name="model.txt"):
     position_str = ""
     velocity_str = ""
     for p in model['model']:
-        position_str += f"{p['position'][0]}\t{p['position'][1]}\t{p['position'][2]}\t{p['type'] + 0.1}\n"
-        velocity_str += f"{p['velocity'][0]}\t{p['velocity'][1]}\t{p['velocity'][2]}\t{p['type'] + 0.1}\n"
-    fp.write(position_str)
+        position_str = f"{p['position'][0]}\t{p['position'][1]}\t{p['position'][2]}\t{p['type'] + 0.1}\n"
+        fp.write(position_str)
     fp.write("]\n")
     fp.write("velocity[\n")
-    fp.write(velocity_str)
+    for p in model['model']:
+        velocity_str = f"{p['velocity'][0]}\t{p['velocity'][1]}\t{p['velocity'][2]}\t{p['type'] + 0.1}\n"
+        fp.write(velocity_str)
     fp.write("]\n")
     fp.write("connection[\n")
     fp.write("]\n")
@@ -325,9 +326,16 @@ def main():
     #gen_model(8, 8, 8)
     #gen_model(128, 128, 128)
     #gen_model(192, 96, 96)
-    gen_model(24, 12, 12)
-    #gen_model(96, 96, 96)
-
+    
+    #gen_model(48, 24, 24) # 96368
+    #gen_model(96, 48, 48) # 844203
+    #gen_model(96, 48, 48, coeff=5/7) # 1183724
+    #gen_model(192, 96, 96, coeff=1/4) # 3547755
+    #gen_model(192, 96, 96) # 6904779
+    #gen_model(192, 96, 96, coeff=5/7) # 9772237
+    
+    #gen_model(392, 96, 96, coeff=1/2) # 14M
+    gen_model(392, 96, 96, coeff=5/7) # 20078971M
     #gen_model(192, 48, 48)
     #gen_model(96, 24, 24)
     #gen_model(192, 48, 192)

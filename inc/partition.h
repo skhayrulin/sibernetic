@@ -45,6 +45,10 @@ namespace sibernetic{
             int limit() {
                 return size() + offset();
             }
+
+            void to_string() {
+                std::cout << start << end << ghost_start << ghost_end << start_cell_id << end_cell_id << start_ghost_cell_id << end_ghost_cell_id << std::cout;
+            }
         };
     }
 }

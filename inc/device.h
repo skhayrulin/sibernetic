@@ -32,6 +32,7 @@ struct device {
     char c_buffer[100];
     cl_int result;
     size_t work_group_size, comp_unints_count;
+    size_t max_alloc_mem_size;
     // Print some information about chosen platform
     result = dev.getInfo(CL_DEVICE_NAME, &c_buffer); // CL_INVALID_VALUE = -30;
     if (result == CL_SUCCESS) {
@@ -58,6 +59,12 @@ struct device {
       std::cout << "CL_CONTEXT_PLATFORM [" << platform_id
                 << "]: CL_DEVICE_MAX_COMPUTE_UNITS [" << dev_id << "]: \t"
                 << comp_unints_count << std::endl;
+    }
+    result = dev.getInfo(CL_DEVICE_MAX_MEM_ALLOC_SIZE, &max_alloc_mem_size);
+    if (result == CL_SUCCESS) {
+      std::cout << "CL_CONTEXT_PLATFORM [" << platform_id
+                << "]: CL_DEVICE_MAX_MEM_ALLOC_SIZE [" << dev_id << "]: \t"
+                << max_alloc_mem_size / (1024.f * 1024.f * 1024.f) << "G" << std::endl;
     }
   }
 

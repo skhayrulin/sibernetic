@@ -67,6 +67,11 @@ int main(int argc, char **argv) {
   if (prsr.check_arg("--p_sort")) {
     parallel_sort = true;
   }
+  int iter_lim = -1;
+  if (prsr.check_arg("-iter_lim")) {
+    iter_lim = std::atoi(prsr.get_arg_value("-iter_lim").c_str());
+  }
+
   try {
     abstract_reader<float> * reader = nullptr;
     if (prsr.check_arg("--json")) {
@@ -84,7 +89,7 @@ int main(int argc, char **argv) {
             parallel_sort
     );
     //model->sort();
-    s_con.run();
+    s_con.run(iter_lim);
   } catch (sibernetic::parser_error &e) {
     std::cout << e.what() << std::endl;
     return EXIT_FAILURE;

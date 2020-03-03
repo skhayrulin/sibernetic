@@ -317,6 +317,10 @@ namespace sibernetic {
                         }
                     }
                 }
+
+				for(auto p: this->partitions) {
+					std::cout <<
+				}
             }
 
             void update_partition(size_t start, size_t end, size_t p_id) {

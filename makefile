@@ -1,5 +1,5 @@
 CC = g++-4.8 -std=c++11 -Wall -pedantic -pthread
-TARGET:=siberneic
+TARGET:=sibernetic
 TEST_TARGET:=stest
 RM := rm -rf
 TEST := test
@@ -63,7 +63,12 @@ clean:
 	$(RM) $(BUILD_DIR)
 	$(RM) $(TEST_BIN_DIR)
 
+clear:
+	@echo "Cleaning...";
+	$(RM) $(BUILD_DIR)
+	$(RM) $(TEST_BIN_DIR)
+
 radio: 
 	@echo 'Building files: $(CPP_FILES)'
 
-.PHONY: all clean debug mac_os test
+.PHONY: all clean debug mac_os test clear
